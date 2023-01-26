@@ -34,8 +34,16 @@ public class Reservation {
     @JsonIgnore
     private PlaceToRent placeToRent;
 
-    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final Person landLord, final Person tenant,
-                       final BigDecimal totalCost, final PlaceToRent placeToRent) {
+    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final Person tenant,
+                        final PlaceToRent placeToRent) {
+        this.issueDate = issueDate;
+        this.returnDate = returnDate;
+        this.tenant = tenant;
+        this.placeToRent = placeToRent;
+    }
+
+    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final Person landLord, final Person tenant, final BigDecimal totalCost,
+                       final PlaceToRent placeToRent) {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.landLord = landLord;
