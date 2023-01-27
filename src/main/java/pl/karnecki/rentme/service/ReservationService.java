@@ -28,24 +28,24 @@ import java.util.Optional;
 @Slf4j
 public class ReservationService {
 
-    ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-    PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
-    PlaceToRentRepository placeToRentRepository;
+    private final PlaceToRentRepository placeToRentRepository;
 
-    public void createReservation(ReservationDto reservationDto) {
+    public void createReservation(final ReservationDto reservationDto) {
 
         final Reservation newReservation = validate(reservationDto);
         saveReservation(newReservation);
     }
 
-    public void saveReservation(Reservation reservation) {
+    public void saveReservation(final Reservation reservation) {
 
         reservationRepository.save(reservation);
     }
 
-    public void modifyReservation(ReservationUpdateDto reservationDto) {
+    public void modifyReservation(final ReservationUpdateDto reservationDto) {
 
         Reservation reservation = checkReservationExistence(reservationDto);
 
@@ -54,13 +54,13 @@ public class ReservationService {
 
     }
 
-    public List<Reservation> findReservationForTenant(PersonDto tenantDto) {
+    public List<Reservation> findReservationForTenant(final PersonDto tenantDto) {
 
         return reservationRepository
             .findReservationByTenantNameAndTenantSurname(tenantDto.name(), tenantDto.surname());
     }
 
-    public List<Reservation> findReservationForObjectToRent(String objectName) {
+    public List<Reservation> findReservationForObjectToRent(final String objectName) {
 
         return reservationRepository.findReservationByPlaceToRentName(objectName);
     }
@@ -76,7 +76,7 @@ public class ReservationService {
 
         return Optional.of(placeToRentRepository.findPlaceToRentByName(reservationDto.placeToRent())).get()
             .orElseThrow(() -> new NoSuchAccommodationException(
-                String.format("Accomodation: %s not found!", reservationDto.placeToRent())));
+                String.format("Accommodation: %s not found!", reservationDto.placeToRent())));
 
     }
 

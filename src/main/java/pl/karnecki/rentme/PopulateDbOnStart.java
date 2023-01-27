@@ -18,8 +18,8 @@ public class PopulateDbOnStart {
 
 
     @Autowired
-    public PopulateDbOnStart(PersonRepository personRepository, PlaceToRentRepository placeToRentRepository,
-                             ReservationRepository reservationRepository) {
+    public PopulateDbOnStart(final PersonRepository personRepository, final PlaceToRentRepository placeToRentRepository,
+                             final ReservationRepository reservationRepository) {
 
         Person landlord = new Person("Blazej", "Karnecki");
         Person person1 = new Person("John", "Doe");
@@ -29,47 +29,61 @@ public class PopulateDbOnStart {
         personRepository.save(person1);
         personRepository.save(person2);
 
-        PlaceToRent placeToRent1 = new PlaceToRent(
-            "Jantar_Hotel", BigDecimal.valueOf(100L), 28, "High standard hotel room",
-            landlord, Set.of());
-        PlaceToRent placeToRent2 = new PlaceToRent(
-            "DayAndNight_Apartments", BigDecimal.valueOf(200L), 35, "Short and long term rental",
-            landlord, Set.of());
+        PlaceToRent placeToRent1 = PlaceToRent.builder()
+            .name("Jantar_Hotel")
+            .pricePerDay(BigDecimal.valueOf(100L))
+            .area(28)
+            .description("High standard hotel room")
+            .landlord(landlord)
+            .reservations(Set.of())
+            .build();
+
+        PlaceToRent placeToRent2 = PlaceToRent.builder()
+            .name("DayAndNight_Apartments")
+            .pricePerDay(BigDecimal.valueOf(200L))
+            .area(35)
+            .description("Short and long term rental")
+            .landlord(landlord)
+            .reservations(Set.of())
+            .build();
 
         placeToRentRepository.save(placeToRent1);
         placeToRentRepository.save(placeToRent2);
 
-        Reservation reservation1 = new Reservation(
-            LocalDate.of(2023, 2, 1),
-            LocalDate.of(2023, 2, 7),
-            BigDecimal.valueOf(700L),
-            landlord,
-            person1,
-            placeToRent1);
+        Reservation reservation1 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 2, 1))
+            .returnDate(LocalDate.of(2023, 2, 7))
+            .totalCost(BigDecimal.valueOf(700L))
+            .landLord(landlord)
+            .tenant(person1)
+            .placeToRent(placeToRent1)
+            .build();
 
-        Reservation reservation2 = new Reservation(
-            LocalDate.of(2023, 2, 9),
-            LocalDate.of(2023, 2, 10),
-            BigDecimal.valueOf(200L),
-            landlord,
-            person2,
-            placeToRent2);
+        Reservation reservation2 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 2, 9))
+            .returnDate(LocalDate.of(2023, 2, 10))
+            .totalCost(BigDecimal.valueOf(200L))
+            .landLord(landlord)
+            .tenant(person2)
+            .placeToRent(placeToRent2)
+            .build();
+        Reservation reservation3 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 5, 10))
+            .returnDate(LocalDate.of(2023, 5, 19))
+            .totalCost(BigDecimal.valueOf(2000L))
+            .landLord(landlord)
+            .tenant(person2)
+            .placeToRent(placeToRent2)
+            .build();
 
-        Reservation reservation3 = new Reservation(
-            LocalDate.of(2023, 5, 10),
-            LocalDate.of(2023, 5, 19),
-            BigDecimal.valueOf(2000L),
-            landlord,
-            person2,
-            placeToRent2);
-
-        Reservation reservation4 = new Reservation(
-            LocalDate.of(2023, 5, 20),
-            LocalDate.of(2023, 5, 21),
-            BigDecimal.valueOf(200L),
-            landlord,
-            person2,
-            placeToRent2);
+        Reservation reservation4 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 5, 20))
+            .returnDate(LocalDate.of(2023, 5, 21))
+            .totalCost(BigDecimal.valueOf(200L))
+            .landLord(landlord)
+            .tenant(person2)
+            .placeToRent(placeToRent2)
+            .build();
 
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);

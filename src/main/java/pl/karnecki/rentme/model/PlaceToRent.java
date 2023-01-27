@@ -1,18 +1,17 @@
 package pl.karnecki.rentme.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Entity
 @ToString
-@NoArgsConstructor
 @Table(name = "Places_to_rent")
 public class PlaceToRent {
 

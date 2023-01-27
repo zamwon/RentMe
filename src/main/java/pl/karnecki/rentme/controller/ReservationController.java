@@ -20,13 +20,13 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @GetMapping("/tenant")
-    public List<Reservation> getReservationForTenant(@RequestBody PersonDto tenantDto) {
+    public List<Reservation> getReservationForTenant(@RequestBody final PersonDto tenantDto) {
 
         return reservationService.findReservationForTenant(tenantDto);
     }
 
     @GetMapping("/object/{name}")
-    public List<Reservation> getReservationForObject(@PathVariable String name) {
+    public List<Reservation> getReservationForObject(@PathVariable final String name) {
 
         return reservationService.findReservationForObjectToRent(name);
     }

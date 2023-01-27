@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PlaceToRentRepository extends JpaRepository<PlaceToRent, Long> {
 
-    Optional<PlaceToRent> findPlaceToRentByName(String name);
+    Optional<PlaceToRent> findPlaceToRentByName(final String name);
 
 }

@@ -12,15 +12,15 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    List<Reservation> findReservationByTenantNameAndTenantSurname(String name, String surname);
+    List<Reservation> findReservationByTenantNameAndTenantSurname(final String name, final String surname);
 
-    List<Reservation> findReservationByPlaceToRentName(String name);
+    List<Reservation> findReservationByPlaceToRentName(final String name);
 
     @Query(value = "SELECT * FROM reservations WHERE issue_date >= :from AND return_date <= :to", nativeQuery = true)
-    List<Reservation> findReservationsInRange(LocalDate from, LocalDate to);
+    List<Reservation> findReservationsInRange(final LocalDate from, final LocalDate to);
 
-    Optional<Reservation> findReservationById(Long reservationId);
+    Optional<Reservation> findReservationById(final Long reservationId);
 
     @Query(value = "SELECT * FROM reservations WHERE issue_date >= :from AND return_date <= :to AND id != :reservationId", nativeQuery = true)
-    List<Reservation> findReservationsOverlapped(LocalDate from, LocalDate to, Long reservationId);
+    List<Reservation> findReservationsOverlapped(final LocalDate from, final LocalDate to, final Long reservationId);
 }
