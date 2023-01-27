@@ -113,4 +113,19 @@ class ReservationControllerTest {
 
         Assertions.assertEquals(actual, resultList);
     }
+
+    @Test
+    void shouldNotReturnReservationsForTenant() {
+
+        final var resultList = List.of(reservation2, reservation3, reservation4);
+        //when
+        when(reservationRepository.findReservationByTenantNameAndTenantSurname("Want", "ToRent"))
+            .thenReturn(resultList);
+
+        //then
+        final var actual = reservationService.findReservationForTenant(new PersonDto("No", "Such"));
+
+
+        Assertions.assertNotEquals(actual, resultList);
+    }
 }
