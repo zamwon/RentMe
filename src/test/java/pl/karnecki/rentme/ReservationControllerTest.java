@@ -2,11 +2,11 @@ package pl.karnecki.rentme;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import pl.karnecki.rentme.dto.PersonDto;
 import pl.karnecki.rentme.model.Person;
 import pl.karnecki.rentme.model.PlaceToRent;
 import pl.karnecki.rentme.model.Reservation;
@@ -37,6 +37,10 @@ class ReservationControllerTest {
     @InjectMocks
     private ReservationService reservationService = new ReservationService(reservationRepository, personRepository, placeToRentRepository);
 
+    private Reservation reservation2;
+    private Reservation reservation3;
+    private Reservation reservation4;
+
     @BeforeEach
     public void setUpRepos() {
         Person landlord = new Person("Blazej", "Karnecki");
@@ -65,7 +69,7 @@ class ReservationControllerTest {
             person1,
             placeToRent1);
 
-        Reservation reservation2 = new Reservation(
+        reservation2 = new Reservation(
             LocalDate.of(2023, 2, 9),
             LocalDate.of(2023, 2, 10),
             BigDecimal.valueOf(200L),
@@ -73,7 +77,7 @@ class ReservationControllerTest {
             person2,
             placeToRent2);
 
-        Reservation reservation3 = new Reservation(
+        reservation3 = new Reservation(
             LocalDate.of(2023, 5, 10),
             LocalDate.of(2023, 5, 19),
             BigDecimal.valueOf(2000L),
@@ -81,7 +85,7 @@ class ReservationControllerTest {
             person2,
             placeToRent2);
 
-        Reservation reservation4 = new Reservation(
+        reservation4 = new Reservation(
             LocalDate.of(2023, 5, 20),
             LocalDate.of(2023, 5, 21),
             BigDecimal.valueOf(200L),
@@ -98,27 +102,15 @@ class ReservationControllerTest {
     @Test
     void shouldReturnReservationsForTenant() {
 
+        final var resultList = List.of(reservation2, reservation3, reservation4);
         //when
-        List<Reservation> actual = reservationRepository
-            .findReservationByTenantNameAndTenantSurname("Want", "ToRent");
-
+        when(reservationRepository.findReservationByTenantNameAndTenantSurname("Want", "ToRent"))
+            .thenReturn(resultList);
 
         //then
-        when(reservationRepository.findReservationByTenantNameAndTenantSurname("Want", "ToRent"))
-            .thenReturn(actual);
-        //Assertions.assertEquals("Want", actual.get(0).getTenant().getName());
-        //Assertions.assertEquals("ToRent", actual.get(0).getTenant().getSurname());
-    }
-//    @Test
-//    @DisplayName("Should No Return Any Name")
-//    public void shouldNoReturnAnyName() {
-//
-//        //when
-//        List<Pokemon> actual = pokemonService.getPokemonsByName("Blazej");
-//
-//        //then
-//        when(pokemonDao.findByName("Blazej")).thenReturn(actual);
-////        assertTrue(actual.isEmpty());
-//    }
+        final var actual = reservationService.findReservationForTenant(new PersonDto("Want", "ToRent"));
 
+
+        Assertions.assertEquals(actual, resultList);
+    }
 }
