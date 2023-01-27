@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -11,9 +12,10 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
-@Table(name = "reservations")
+@Table(name = "Reservations")
 public class Reservation {
 
     @Id
@@ -34,16 +36,8 @@ public class Reservation {
     @JsonIgnore
     private PlaceToRent placeToRent;
 
-    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final Person tenant,
-                        final PlaceToRent placeToRent) {
-        this.issueDate = issueDate;
-        this.returnDate = returnDate;
-        this.tenant = tenant;
-        this.placeToRent = placeToRent;
-    }
-
-    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final Person landLord, final Person tenant, final BigDecimal totalCost,
-                       final PlaceToRent placeToRent) {
+    public Reservation(final LocalDate issueDate, final LocalDate returnDate, final BigDecimal totalCost,
+                       final Person landLord, final Person tenant, final PlaceToRent placeToRent) {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.landLord = landLord;

@@ -23,15 +23,19 @@ public class PlaceToRent {
     private BigDecimal pricePerDay;
     private Integer area;
     private String description;
+    @OneToOne
+    private Person landlord;
 
     @OneToMany(mappedBy = "placeToRent")
     private Set<Reservation> reservations;
 
-    public PlaceToRent(final String name, final BigDecimal pricePerDay, final Integer area, final String description, final Set<Reservation> reservation) {
+    public PlaceToRent(final String name, final BigDecimal pricePerDay, final Integer area, final String description,
+                       final Person landlord, final Set<Reservation> reservation) {
         this.name = name;
         this.pricePerDay = pricePerDay;
         this.area = area;
         this.description = description;
+        this.landlord = landlord;
         this.reservations = reservation;
     }
 }

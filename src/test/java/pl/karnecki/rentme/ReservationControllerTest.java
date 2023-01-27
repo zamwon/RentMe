@@ -1,26 +1,44 @@
 package pl.karnecki.rentme;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 import pl.karnecki.rentme.model.Person;
 import pl.karnecki.rentme.model.PlaceToRent;
 import pl.karnecki.rentme.model.Reservation;
 import pl.karnecki.rentme.repository.PersonRepository;
 import pl.karnecki.rentme.repository.PlaceToRentRepository;
 import pl.karnecki.rentme.repository.ReservationRepository;
+import pl.karnecki.rentme.service.ReservationService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
-@Component
-public class PopulateDbOnStart {
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@SpringBootTest
+class ReservationControllerTest {
 
-    @Autowired
-    public PopulateDbOnStart(PersonRepository personRepository, PlaceToRentRepository placeToRentRepository,
-                             ReservationRepository reservationRepository) {
+    @Mock
+    private PersonRepository personRepository = mock(PersonRepository.class);
+    @Mock
+    private PlaceToRentRepository placeToRentRepository = mock(PlaceToRentRepository.class);
 
+    @Mock
+    private ReservationRepository reservationRepository = mock(ReservationRepository.class);
+
+    @InjectMocks
+    private ReservationService reservationService = new ReservationService(reservationRepository, personRepository, placeToRentRepository);
+
+    @BeforeEach
+    public void setUpRepos() {
         Person landlord = new Person("Blazej", "Karnecki");
         Person person1 = new Person("John", "Doe");
         Person person2 = new Person("Want", "ToRent");
@@ -76,4 +94,31 @@ public class PopulateDbOnStart {
         reservationRepository.save(reservation3);
         reservationRepository.save(reservation4);
     }
+
+    @Test
+    void shouldReturnReservationsForTenant() {
+
+        //when
+        List<Reservation> actual = reservationRepository
+            .findReservationByTenantNameAndTenantSurname("Want", "ToRent");
+
+
+        //then
+        when(reservationRepository.findReservationByTenantNameAndTenantSurname("Want", "ToRent"))
+            .thenReturn(actual);
+        //Assertions.assertEquals("Want", actual.get(0).getTenant().getName());
+        //Assertions.assertEquals("ToRent", actual.get(0).getTenant().getSurname());
+    }
+//    @Test
+//    @DisplayName("Should No Return Any Name")
+//    public void shouldNoReturnAnyName() {
+//
+//        //when
+//        List<Pokemon> actual = pokemonService.getPokemonsByName("Blazej");
+//
+//        //then
+//        when(pokemonDao.findByName("Blazej")).thenReturn(actual);
+////        assertTrue(actual.isEmpty());
+//    }
+
 }

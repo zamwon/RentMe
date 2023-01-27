@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.karnecki.rentme.dto.PersonDto;
 import pl.karnecki.rentme.dto.ReservationDto;
+import pl.karnecki.rentme.dto.ReservationUpdateDto;
 import pl.karnecki.rentme.model.Reservation;
 import pl.karnecki.rentme.service.ReservationService;
 
@@ -21,7 +22,7 @@ public class ReservationController {
     @GetMapping("/tenant")
     public List<Reservation> getReservationForTenant(@RequestBody PersonDto tenantDto) {
 
-       return reservationService.findReservationForTenant(tenantDto);
+        return reservationService.findReservationForTenant(tenantDto);
     }
 
     @GetMapping("/object/{name}")
@@ -33,8 +34,16 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<HttpStatus> createReservation(@RequestBody final ReservationDto reservationDto) {
 
-         reservationService.createReservation(reservationDto);
+        reservationService.createReservation(reservationDto);
 
-         return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> updateReservation(@RequestBody final ReservationUpdateDto reservationId) {
+
+        reservationService.modifyReservation(reservationId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
