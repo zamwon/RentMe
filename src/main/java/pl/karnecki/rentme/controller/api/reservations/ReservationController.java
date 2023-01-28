@@ -1,4 +1,4 @@
-package pl.karnecki.rentme.controller;
+package pl.karnecki.rentme.controller.api.reservations;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import pl.karnecki.rentme.model.Reservation;
 import pl.karnecki.rentme.service.ReservationService;
 
 import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/reservation")

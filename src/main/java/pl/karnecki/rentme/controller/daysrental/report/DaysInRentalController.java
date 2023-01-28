@@ -1,4 +1,4 @@
-package pl.karnecki.rentme.controller;
+package pl.karnecki.rentme.controller.daysrental.report;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ public class DaysInRentalController {
     @GetMapping("/ui/report")
     public ResponseEntity<DaysInRentalReportResponse> getDaysInRentalReport(@RequestBody final DaysInRentalReportRequest request) {
 
-
         daysInRentalRequestValidator.validate(request);
-        final var daysInRentalReport = daysInRentalReportService.getDaysInRentalReport(request);
 
-        return ResponseEntity.ok().body(new DaysInRentalReportResponse(daysInRentalReport));
+        return ResponseEntity.ok(
+            new DaysInRentalReportResponse(
+                daysInRentalReportService.getDaysInRentalReport(request)));
     }
 }

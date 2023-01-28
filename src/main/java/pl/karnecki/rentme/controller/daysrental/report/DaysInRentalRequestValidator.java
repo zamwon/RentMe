@@ -1,4 +1,4 @@
-package pl.karnecki.rentme.controller;
+package pl.karnecki.rentme.controller.daysrental.report;
 
 import org.springframework.stereotype.Component;
 
