@@ -10,7 +10,7 @@ class DaysInRentalReportResponse {
 
     List<DaysInRentalReportRowResponse> rows;
 
-    DaysInRentalReportResponse(final Page<DaysInRentalReportRow> rows) {
+    DaysInRentalReportResponse(final Page<IDaysInRentalReportRow> rows) {
 
         this.rows = rows
             .stream()
@@ -21,12 +21,12 @@ class DaysInRentalReportResponse {
     @Value
     class DaysInRentalReportRowResponse {
 
-        String accommodationName;
-        Integer reservationCount;
-        Integer daysInRental;
+        String getAccommodationName;
+        Long reservationCount;
+        Long daysInRental;
 
-        DaysInRentalReportRowResponse(final DaysInRentalReportRow row) {
-            this.accommodationName = row.getAccommodationName();
+        DaysInRentalReportRowResponse(final IDaysInRentalReportRow row) {
+            this.getAccommodationName = row.getAccommodationName();
             this.reservationCount = row.getReservationCount();
             this.daysInRental = row.getDaysInRental();
         }

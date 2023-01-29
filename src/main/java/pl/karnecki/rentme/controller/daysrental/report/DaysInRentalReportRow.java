@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class DaysInRentalReportRow {
 
-    private String accommodationName;
-    private Integer reservationCount;
-    private Integer daysInRental;
+    private Long accommodationId;
+    private Long reservationCount;
+    private Long daysInRental;
 }

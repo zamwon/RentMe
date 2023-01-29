@@ -6,7 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import pl.karnecki.rentme.controller.daysrental.report.DaysInRentalReportRequest;
-import pl.karnecki.rentme.controller.daysrental.report.DaysInRentalReportRow;
+
+import pl.karnecki.rentme.controller.daysrental.report.IDaysInRentalReportRow;
 import pl.karnecki.rentme.repository.ReservationRepository;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class DaysInRentalReportService {
 
     private final ReservationRepository reservationRepository;
 
-    public Page<DaysInRentalReportRow> getDaysInRentalReport(final DaysInRentalReportRequest request) {
+    public Page<IDaysInRentalReportRow> getDaysInRentalReport(final DaysInRentalReportRequest request) {
 
         log.info("Generating Days in Rental Report - start - searchParams: {}", request);
 
@@ -28,7 +29,7 @@ public class DaysInRentalReportService {
         return new PageImpl<>(reportRows);
     }
 
-    public List<DaysInRentalReportRow> getDaysInRentalReportRows(final DaysInRentalReportRequest request) {
+    public List<IDaysInRentalReportRow> getDaysInRentalReportRows(final DaysInRentalReportRequest request) {
 
         return reservationRepository.getReport(request.dateFrom().toString(), request.dateTo().toString());
     }
