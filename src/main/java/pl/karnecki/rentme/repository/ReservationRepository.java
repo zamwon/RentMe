@@ -30,13 +30,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                 SELECT
                 p.name as accommodationName,
                 COUNT(r1.*) as reservationCount,
-                SUM(DATEDIFF('day',  r1.issue_date, r1.return_date) +
-                    CASE
-                       WHEN DATEDIFF('day',  r1.issue_date, r1.return_date) = 1 THEN 0
-                       WHEN EXISTS (SELECT 1 FROM reservations r2 WHERE r2.place_to_rent_id = r1.place_to_rent_id
-                                       AND r2.issue_date =  DATEADD('day', 1, r1.return_date )) THEN 1
-                       ELSE 1
-                    END) as daysInRental
+                SELECT SUM(DATEDIFF('day', r1.issue_date, r1.return_date)) FROM RESERVATIONS r1
+                    WHERE r1.place_to_rent_id = p.id AND issue_date >= :dateFrom AND return_date <= :dateTo
+                    GROUP BY r1.place_to_rent_id as daysInRental
                 FROM reservations r1
                 JOIN places_to_rent p ON r1.place_to_rent_id = p.id
                 WHERE (issue_date >= :dateFrom AND return_date <= :dateTo)
