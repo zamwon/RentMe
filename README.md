@@ -1,5 +1,4 @@
 # RentMe
-@ created by Błażej Karnecki est. 2023
  
 Rent me is an app for maintaining reservations of residential facilities both short and long term!
 
