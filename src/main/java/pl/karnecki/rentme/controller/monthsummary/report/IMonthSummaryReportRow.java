@@ -9,4 +9,12 @@ public interface IMonthSummaryReportRow {
     Long getGuestsAmount();
     Long getBookedPropertiesAmount();
     BigDecimal getTotalProfit();
+
+    void setLandLordId(Long landLordId);
+    void setLandLordNameAndSurname(String landLordNameAndSurname);
+    void setGuestsAmount(Long guestsAmount);
+    void setBookedPropertiesAmount(Long bookedPropertiesAmount);
+    void setTotalProfit(BigDecimal totalProfit);
+
+
 }

@@ -1,5 +1,6 @@
 package pl.karnecki.rentme.controller.monthsummary.report;
 
+import lombok.Builder;
 import lombok.Data;
 import pl.karnecki.rentme.controller.IDateTimeFrame;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Data
+@Builder
 public class MonthSummaryReportRequest implements IDateTimeFrame {
 
     private String dateFrom;
