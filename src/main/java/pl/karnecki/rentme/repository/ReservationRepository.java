@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.karnecki.rentme.controller.daysrental.report.IDaysInRentalReportRow;
+import pl.karnecki.rentme.controller.monthsummary.report.IMonthSummaryReportRow;
 import pl.karnecki.rentme.model.Reservation;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -38,7 +40,22 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                 WHERE (issue_date >= :dateFrom AND return_date <= :dateTo)
                 GROUP BY p.name
             """, nativeQuery = true)
-    List<IDaysInRentalReportRow> getReport(final String dateFrom, final String dateTo);
+    List<IDaysInRentalReportRow> getDaysInRentalReport(final String dateFrom, final String dateTo);
+
+    @Query(value = """
+    SELECT
+        p.id as landLordId,
+        CONCAT(p.name, ' ' , p.surname) as landLordNameAndSurname,
+        COUNT(DISTINCT tenant_id) as guestsAmount,
+        COUNT(place_to_rent_id) as bookedPropertiesAmount,
+        SUM(TOTAL_COST) as totalProfit
+    FROM RESERVATIONS r\s
+    JOIN PERSONS p ON r.land_lord_id = p.id
+    WHERE (issue_date >= :issueDate AND return_date <= :returnDate ) AND p.id IN :landLords
+    GROUP BY p.id
+    ORDER BY p.surname ASC
+    """, nativeQuery = true)
+   List<IMonthSummaryReportRow> getMonthSummaryReport(LocalDate issueDate, LocalDate returnDate, Set<Long> landLords);
 
 
 }

@@ -3,7 +3,7 @@ package pl.karnecki.rentme.controller.daysrental.report;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.karnecki.rentme.service.reports.DaysInRentalReportService;
+import pl.karnecki.rentme.service.report.days.in.rental.DaysInRentalReportService;
 
 @RestController
 @RequiredArgsConstructor

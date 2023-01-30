@@ -1,4 +1,4 @@
-package pl.karnecki.rentme.service.reports;
+package pl.karnecki.rentme.service.report.days.in.rental;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +25,12 @@ public class DaysInRentalReportService {
 
         final var reportRows = getDaysInRentalReportRows(request);
 
-        log.info("Generating Game Stats Report - finished");
+        log.info("Generating Days in Rental Report - finished");
         return new PageImpl<>(reportRows);
     }
 
     public List<IDaysInRentalReportRow> getDaysInRentalReportRows(final DaysInRentalReportRequest request) {
 
-        return reservationRepository.getReport(request.dateFrom().toString(), request.dateTo().toString());
+        return reservationRepository.getDaysInRentalReport(request.dateFrom().toString(), request.dateTo().toString());
     }
 }

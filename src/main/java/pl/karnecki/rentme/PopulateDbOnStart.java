@@ -22,12 +22,18 @@ public class PopulateDbOnStart {
                              final ReservationRepository reservationRepository) {
 
         Person landlord = new Person("Blazej", "Karnecki");
+        Person landlord2 = new Person("Adam", "Kowalski");
+        Person landlord3 = new Person("TestLand", "TestLord");
         Person person1 = new Person("John", "Doe");
         Person person2 = new Person("Want", "ToRent");
+        Person person3 = new Person("Personality", "NN");
 
         personRepository.save(landlord);
+        personRepository.save(landlord2);
+        personRepository.save(landlord3);
         personRepository.save(person1);
         personRepository.save(person2);
+        personRepository.save(person3);
 
         PlaceToRent placeToRent1 = PlaceToRent.builder()
             .name("Jantar_Hotel")
@@ -47,8 +53,18 @@ public class PopulateDbOnStart {
             .reservations(Set.of())
             .build();
 
+        PlaceToRent placeToRent3 = PlaceToRent.builder()
+            .name("Test_Apartments")
+            .pricePerDay(BigDecimal.valueOf(100L))
+            .area(100)
+            .description("Description")
+            .landlord(landlord2)
+            .reservations(Set.of())
+            .build();
+
         placeToRentRepository.save(placeToRent1);
         placeToRentRepository.save(placeToRent2);
+        placeToRentRepository.save(placeToRent3);
 
         Reservation reservation1 = Reservation.builder()
             .issueDate(LocalDate.of(2023, 2, 1))
@@ -85,9 +101,40 @@ public class PopulateDbOnStart {
             .placeToRent(placeToRent2)
             .build();
 
+        Reservation reservation5 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 1, 1))
+            .returnDate(LocalDate.of(2023, 1, 31))
+            .totalCost(BigDecimal.valueOf(3000L))
+            .landLord(landlord2)
+            .tenant(person2)
+            .placeToRent(placeToRent3)
+            .build();
+
+        Reservation reservation6 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 1, 19))
+            .returnDate(LocalDate.of(2023, 1, 20))
+            .totalCost(BigDecimal.valueOf(200L))
+            .landLord(landlord)
+            .tenant(person2)
+            .placeToRent(placeToRent2)
+            .build();
+
+        Reservation reservation7 = Reservation.builder()
+            .issueDate(LocalDate.of(2023, 2, 10))
+            .returnDate(LocalDate.of(2023, 2, 19))
+            .totalCost(BigDecimal.valueOf(2000L))
+            .landLord(landlord)
+            .tenant(person3)
+            .placeToRent(placeToRent3)
+            .build();
+
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
         reservationRepository.save(reservation3);
         reservationRepository.save(reservation4);
+        reservationRepository.save(reservation5);
+        reservationRepository.save(reservation6);
+        reservationRepository.save(reservation6);
+        reservationRepository.save(reservation7);
     }
 }
