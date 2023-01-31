@@ -5,7 +5,8 @@
 
 Rent me is an app for maintaining reservations of residential facilities both short and long term!
 
-To run application use one of provided scripts.
+### Requirements
+You need to have a Java SDK installed and and set the JAVA_HOME and MAVEN_HOME environment variable to point to a valid Java SDK and Maven.
 
 For testing an application use POSTMAN!
 
