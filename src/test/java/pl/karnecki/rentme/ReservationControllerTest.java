@@ -39,7 +39,7 @@ class ReservationControllerTest {
     private ReservationRepository reservationRepository = mock(ReservationRepository.class);
 
     @InjectMocks
-    private ReservationService reservationService = new ReservationService(reservationRepository, personRepository, placeToRentRepository);
+    private ReservationService reservationService;
 
     private Reservation reservation2;
     private Reservation reservation3;
@@ -118,7 +118,7 @@ class ReservationControllerTest {
         final var actual = reservationService.findReservationForTenant(new PersonDto("Want", "ToRent"));
 
 
-        Assertions.assertEquals(actual, resultList);
+        Assertions.assertEquals(resultList, actual);
     }
 
     @Test
